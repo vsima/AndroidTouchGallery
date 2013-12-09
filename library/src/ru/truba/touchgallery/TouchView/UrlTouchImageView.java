@@ -110,7 +110,7 @@ public class UrlTouchImageView extends RelativeLayout {
         
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-        	if (bitmap == null) 
+        	if (bitmap == null)
         	{
         		mImageView.setScaleType(ScaleType.CENTER);
         		bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_photo);
