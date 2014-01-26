@@ -99,7 +99,12 @@ public class UrlTouchImageView extends RelativeLayout {
 						publishProgress((int)(progressValue * 100));
 					}
 				});
-                bm = BitmapFactory.decodeStream(bis);
+                try {
+                    bm = BitmapFactory.decodeStream(bis);
+                } catch (OutOfMemoryError oome) {
+                    oome.printStackTrace();
+                    System.gc();
+                }
                 bis.close();
                 is.close();
             } catch (Exception e) {
