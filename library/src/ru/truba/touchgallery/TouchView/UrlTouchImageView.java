@@ -118,8 +118,13 @@ public class UrlTouchImageView extends RelativeLayout {
         	if (bitmap == null)
         	{
         		mImageView.setScaleType(ScaleType.CENTER);
-        		bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_photo);
-        		mImageView.setImageBitmap(bitmap);
+                try {
+        		    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_photo);
+                } catch (OutOfMemoryError oome) {
+                    oome.printStackTrace();
+                    System.gc();
+                }
+         		mImageView.setImageBitmap(bitmap);
         	}
         	else 
         	{

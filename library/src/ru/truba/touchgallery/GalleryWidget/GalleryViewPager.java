@@ -82,17 +82,22 @@ public class GalleryViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP)
-        {
+        if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
             super.onInterceptTouchEvent(event);
         }
 
         float [] difference = handleMotionEvent(event);
 
         if (mCurrentView.pagerCanScroll()) {
-            return super.onInterceptTouchEvent(event);
-        }
-        else {
+
+            //fix for java.lang.IllegalArgumentException: pointerIndex out of range
+            //make sure we have at least one pointerIndex
+            if (event.getPointerCount() < 1) {
+                return false;
+            } else {
+                return super.onInterceptTouchEvent(event);
+            }
+        } else {
             if (difference != null && mCurrentView.onRightSide && difference[0] < 0) //move right
             {
                 return super.onInterceptTouchEvent(event);
